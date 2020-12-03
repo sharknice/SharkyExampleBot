@@ -1,0 +1,14 @@
+[
+  {
+    "ChatType": "Greeting",
+    "Messages": [
+      [ "gl hf much love {name}!" ]
+    ]
+  },
+  {
+    "ChatType": "opponent-Greeting",
+    "Messages": [
+      [ "gl hf much love!" ]
+    ]
+  }
+]

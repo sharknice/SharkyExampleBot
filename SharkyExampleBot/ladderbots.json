@@ -1,0 +1,10 @@
+{
+  "Bots": {
+    "SharkyExampleBot": {
+      "Race": "Random",
+      "Type": "cppwin32",
+      "RootPath": "./",
+      "FileName": "SharkyExampleBot.exe"
+    }
+  }
+}
