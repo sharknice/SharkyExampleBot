@@ -90,6 +90,11 @@ namespace SharkyExampleBot.Builds
                 MacroData.DesiredUpgrades[Upgrades.SHIELDWALL] = true;
             }
 
+            if (UnitManager.Completed(UnitTypes.TERRAN_BARRACKSTECHLAB) > 0)
+            {
+                MacroData.DesiredUpgrades[Upgrades.STIMPACK] = true;
+            }
+
             if (UnitManager.Completed(UnitTypes.TERRAN_FACTORY) > 0)
             {
                 if (MacroData.DesiredProductionCounts[UnitTypes.TERRAN_STARPORT] < 2)
@@ -121,6 +126,7 @@ namespace SharkyExampleBot.Builds
             if (UnitManager.Completed(UnitTypes.TERRAN_STARPORTTECHLAB) > 0)
             {
                 MacroData.DesiredUpgrades[Upgrades.BANSHEECLOAK] = true;
+                MacroData.DesiredUpgrades[Upgrades.BANSHEESPEED] = true;
 
                 if (MacroData.DesiredUnitCounts[UnitTypes.TERRAN_BANSHEE] < 25)
                 {

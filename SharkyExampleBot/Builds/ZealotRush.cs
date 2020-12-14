@@ -54,5 +54,10 @@ namespace SharkyExampleBot.Builds
                 OpeningAttackChatSent = true;
             }
         }
+
+        public override List<string> CounterTransition(int frame)
+        {
+            return new List<string>();
+        }
     }
 }

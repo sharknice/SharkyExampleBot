@@ -18,6 +18,10 @@ namespace SharkyExampleBot
 
         public List<string> DefaultCounterTransition(int frame)
         {
+            if (EnemyStrategyManager.EnemyStrategies["ZealotRush"].Active && (frame < SharkyOptions.FramesPerSecond * 5 * 60))
+            {
+                return new List<string> { "ZealotRush" };
+            }
             if (EnemyStrategyManager.EnemyStrategies["ZerglingRush"].Active && (frame < SharkyOptions.FramesPerSecond * 5 * 60))
             {
                 return new List<string> { "ZealotRush" };

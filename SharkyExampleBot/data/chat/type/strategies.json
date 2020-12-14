@@ -21,6 +21,12 @@
       [ "So", "many", "marines" ],
       [ "That's a lot of marines" ]
     ]
+  },
+  {
+    "ChatType": "ZealotRush-EnemyStrategy",
+    "Messages": [
+      [ "So", "many", "zealots" ],
+      [ "That's a lot of zealots" ]
+    ]
   }
-
 ]
