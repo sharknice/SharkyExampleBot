@@ -73,6 +73,7 @@ namespace SharkyExampleBot.Builds
             MacroData.Proxies[ProxyTask.ProxyName] = new ProxyData(proxyLocation, MacroData);
 
             AttackData.CustomAttackFunction = true;
+            AttackData.UseAttackDataManager = false;
         }
 
         void SetAttack()

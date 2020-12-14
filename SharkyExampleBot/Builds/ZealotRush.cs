@@ -22,7 +22,6 @@ namespace SharkyExampleBot.Builds
             base.StartBuild(frame);
 
             BuildOptions.StrictGasCount = true;
-            AttackData.ArmyFoodAttack = 8;
 
             MacroData.DesiredUnitCounts[UnitTypes.PROTOSS_ZEALOT] = 100;
 

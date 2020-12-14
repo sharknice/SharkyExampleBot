@@ -3,14 +3,21 @@ using Sharky;
 using Sharky.Builds;
 using Sharky.Builds.Terran;
 using Sharky.Managers;
+using Sharky.MicroTasks;
 
 namespace SharkyExampleBot.Builds
 {
     public class BansheesAndMarines : TerranSharkyBuild
     {
-        public BansheesAndMarines(BuildOptions buildOptions, MacroData macroData, IUnitManager unitManager, AttackData attackData, IChatManager chatManager) : base(buildOptions, macroData, unitManager, attackData, chatManager)
-        {
+        WorkerScoutTask WorkerScoutTask;
+        ProxyScoutTask ProxyScoutTask;
+        bool Scouted;
 
+        MicroManager MicroManager;
+
+        public BansheesAndMarines(BuildOptions buildOptions, MacroData macroData, IUnitManager unitManager, AttackData attackData, IChatManager chatManager, MicroManager microManager) : base(buildOptions, macroData, unitManager, attackData, chatManager)
+        {
+            MicroManager = microManager;
         }
 
         public override void StartBuild(int frame)
@@ -18,12 +25,23 @@ namespace SharkyExampleBot.Builds
             base.StartBuild(frame);
 
             BuildOptions.StrictGasCount = true;
+
+            if (MicroManager.MicroTasks.ContainsKey("WorkerScoutTask"))
+            {
+                WorkerScoutTask = (WorkerScoutTask)MicroManager.MicroTasks["WorkerScoutTask"];
+            }
+            if (MicroManager.MicroTasks.ContainsKey("ProxyScoutTask"))
+            {
+                ProxyScoutTask = (ProxyScoutTask)MicroManager.MicroTasks["ProxyScoutTask"];
+            }
         }
 
         public override void OnFrame(ResponseObservation observation)
         {
             if (MacroData.FoodUsed >= 15)
             {
+                Scout();
+
                 if (MacroData.DesiredProductionCounts[UnitTypes.TERRAN_BARRACKS] < 1)
                 {
                     MacroData.DesiredProductionCounts[UnitTypes.TERRAN_BARRACKS] = 1;
@@ -146,6 +164,22 @@ namespace SharkyExampleBot.Builds
                 {
                     MacroData.DesiredProductionCounts[UnitTypes.TERRAN_COMMANDCENTER]++;
                 }
+            }
+        }
+
+        private void Scout()
+        {
+            if (!Scouted)
+            {
+                if (WorkerScoutTask != null)
+                {
+                    WorkerScoutTask.Enable();
+                }
+                if (ProxyScoutTask != null)
+                {
+                    ProxyScoutTask.Enable();
+                }
+                Scouted = true;
             }
         }
     }

@@ -75,12 +75,12 @@ namespace SharkyExampleBot
             // we create build sequences to be used by each matchup
             var defaultSequences = new List<List<string>>
             {
-                new List<string> { nexusFirst.Name(), robo.Name(), protossRobo.Name() },
+                //new List<string> { nexusFirst.Name(), robo.Name(), protossRobo.Name() },
                 new List<string> { proxyVoidRay.Name() }
             };
             var zergSequences = new List<List<string>>
             {
-                new List<string> { zealotRush.Name() },
+                //new List<string> { zealotRush.Name() },
                 new List<string> { proxyVoidRay.Name() }
             };
             var transitionSequences = new List<List<string>>
@@ -112,7 +112,7 @@ namespace SharkyExampleBot
 
             var defaultSequences = new List<List<string>>
             {
-                new List<string> { zerglingRush.Name(), mutaliskRush.Name() },
+                //new List<string> { zerglingRush.Name(), mutaliskRush.Name() },
                 new List<string> { mutaliskRush.Name() },
             };
 
@@ -131,7 +131,7 @@ namespace SharkyExampleBot
         static BuildChoices GetTerranBuildChoices(DefaultSharkyBot defaultSharkyBot)
         {
             var massMarines = new MassMarines(defaultSharkyBot.BuildOptions, defaultSharkyBot.MacroData, defaultSharkyBot.UnitManager, defaultSharkyBot.AttackData, defaultSharkyBot.ChatManager);
-            var bansheesAndMarines = new BansheesAndMarines(defaultSharkyBot.BuildOptions, defaultSharkyBot.MacroData, defaultSharkyBot.UnitManager, defaultSharkyBot.AttackData, defaultSharkyBot.ChatManager);
+            var bansheesAndMarines = new BansheesAndMarines(defaultSharkyBot.BuildOptions, defaultSharkyBot.MacroData, defaultSharkyBot.UnitManager, defaultSharkyBot.AttackData, defaultSharkyBot.ChatManager, defaultSharkyBot.MicroManager);
 
             var builds = new Dictionary<string, ISharkyBuild>
             {
@@ -141,7 +141,7 @@ namespace SharkyExampleBot
 
             var defaultSequences = new List<List<string>>
             {
-                new List<string> { massMarines.Name(), bansheesAndMarines.Name() },
+                //new List<string> { massMarines.Name(), bansheesAndMarines.Name() },
                 new List<string> { bansheesAndMarines.Name() }
             };
 
