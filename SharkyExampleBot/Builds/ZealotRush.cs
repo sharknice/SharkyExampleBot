@@ -3,7 +3,6 @@ using Sharky;
 using Sharky.Builds;
 using Sharky.Builds.BuildChoosing;
 using Sharky.Managers;
-using Sharky.Managers.Protoss;
 using System.Collections.Generic;
 
 namespace SharkyExampleBot.Builds
@@ -12,7 +11,7 @@ namespace SharkyExampleBot.Builds
     {
         bool OpeningAttackChatSent;
 
-        public ZealotRush(BuildOptions buildOptions, MacroData macroData, IUnitManager unitManager, AttackData attackData, IChatManager chatManager, NexusManager nexusManager, ICounterTransitioner counterTransitioner) : base(buildOptions, macroData, unitManager, attackData, chatManager, nexusManager, counterTransitioner)
+        public ZealotRush(BuildOptions buildOptions, MacroData macroData, ActiveUnitData activeUnitData, AttackData attackData, IChatManager chatManager, ChronoData chronoData, ICounterTransitioner counterTransitioner, UnitCountService unitCountService) : base(buildOptions, macroData, activeUnitData, attackData, chatManager, chronoData, counterTransitioner, unitCountService)
         {
             OpeningAttackChatSent = false;
         }
@@ -25,7 +24,7 @@ namespace SharkyExampleBot.Builds
 
             MacroData.DesiredUnitCounts[UnitTypes.PROTOSS_ZEALOT] = 100;
 
-            NexusManager.ChronodUnits = new HashSet<UnitTypes>
+            ChronoData.ChronodUnits = new HashSet<UnitTypes>
             {
                 UnitTypes.PROTOSS_ZEALOT
             };
@@ -33,14 +32,14 @@ namespace SharkyExampleBot.Builds
 
         public override void OnFrame(ResponseObservation observation)
         {
-            if (UnitManager.Completed(UnitTypes.PROTOSS_PYLON) > 0)
+            if (UnitCountService.Completed(UnitTypes.PROTOSS_PYLON) > 0)
             {
                 if (MacroData.DesiredProductionCounts[UnitTypes.PROTOSS_GATEWAY] < 2)
                 {
                     MacroData.DesiredProductionCounts[UnitTypes.PROTOSS_GATEWAY] = 2;
                 }
             }
-            if (UnitManager.Completed(UnitTypes.PROTOSS_PYLON) >= 2)
+            if (UnitCountService.Completed(UnitTypes.PROTOSS_PYLON) >= 2)
             {
                 if (MacroData.DesiredProductionCounts[UnitTypes.PROTOSS_GATEWAY] < 4)
                 {

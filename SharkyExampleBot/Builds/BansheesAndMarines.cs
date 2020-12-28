@@ -15,7 +15,7 @@ namespace SharkyExampleBot.Builds
 
         MicroManager MicroManager;
 
-        public BansheesAndMarines(BuildOptions buildOptions, MacroData macroData, IUnitManager unitManager, AttackData attackData, IChatManager chatManager, MicroManager microManager) : base(buildOptions, macroData, unitManager, attackData, chatManager)
+        public BansheesAndMarines(BuildOptions buildOptions, MacroData macroData, ActiveUnitData activeUnitData, AttackData attackData, IChatManager chatManager, MicroManager microManager, UnitCountService unitCountService) : base(buildOptions, macroData, activeUnitData, attackData, chatManager, unitCountService)
         {
             MicroManager = microManager;
         }
@@ -48,7 +48,7 @@ namespace SharkyExampleBot.Builds
                 }
             }
 
-            if (UnitManager.Count(UnitTypes.TERRAN_BARRACKS) > 0)
+            if (UnitCountService.Count(UnitTypes.TERRAN_BARRACKS) > 0)
             {
                 if (MacroData.DesiredProductionCounts[UnitTypes.TERRAN_COMMANDCENTER] < 2)
                 {
@@ -63,7 +63,7 @@ namespace SharkyExampleBot.Builds
                 }
             }
 
-            if (UnitManager.Completed(UnitTypes.TERRAN_BARRACKS) > 0 && UnitManager.EquivalentTypeCount(UnitTypes.TERRAN_COMMANDCENTER) >= 2)
+            if (UnitCountService.Completed(UnitTypes.TERRAN_BARRACKS) > 0 && UnitCountService.EquivalentTypeCount(UnitTypes.TERRAN_COMMANDCENTER) >= 2)
             {
                 BuildOptions.StrictGasCount = false;
 
@@ -90,12 +90,12 @@ namespace SharkyExampleBot.Builds
                 MacroData.DesiredUpgrades[Upgrades.SHIELDWALL] = true;
             }
 
-            if (UnitManager.Completed(UnitTypes.TERRAN_BARRACKSTECHLAB) > 0)
+            if (UnitCountService.Completed(UnitTypes.TERRAN_BARRACKSTECHLAB) > 0)
             {
                 MacroData.DesiredUpgrades[Upgrades.STIMPACK] = true;
             }
 
-            if (UnitManager.Completed(UnitTypes.TERRAN_FACTORY) > 0)
+            if (UnitCountService.Completed(UnitTypes.TERRAN_FACTORY) > 0)
             {
                 if (MacroData.DesiredProductionCounts[UnitTypes.TERRAN_STARPORT] < 2)
                 {
@@ -103,7 +103,7 @@ namespace SharkyExampleBot.Builds
                 }
             }
 
-            if (UnitManager.Count(UnitTypes.TERRAN_STARPORT) > 0)
+            if (UnitCountService.Count(UnitTypes.TERRAN_STARPORT) > 0)
             {
                 if (MacroData.DesiredProductionCounts[UnitTypes.TERRAN_BARRACKS] < 2)
                 {
@@ -115,7 +115,7 @@ namespace SharkyExampleBot.Builds
                 }
             }
 
-            if (UnitManager.Completed(UnitTypes.TERRAN_STARPORT) > 0)
+            if (UnitCountService.Completed(UnitTypes.TERRAN_STARPORT) > 0)
             {
                 if (MacroData.DesiredAddOnCounts[UnitTypes.TERRAN_STARPORTTECHLAB] < 2)
                 {
@@ -123,7 +123,7 @@ namespace SharkyExampleBot.Builds
                 }
             }
 
-            if (UnitManager.Completed(UnitTypes.TERRAN_STARPORTTECHLAB) > 0)
+            if (UnitCountService.Completed(UnitTypes.TERRAN_STARPORTTECHLAB) > 0)
             {
                 MacroData.DesiredUpgrades[Upgrades.BANSHEECLOAK] = true;
                 MacroData.DesiredUpgrades[Upgrades.BANSHEESPEED] = true;
@@ -138,7 +138,7 @@ namespace SharkyExampleBot.Builds
                 }
             }
 
-            if (UnitManager.EquivalentTypeCompleted(UnitTypes.TERRAN_COMMANDCENTER) > 2)
+            if (UnitCountService.EquivalentTypeCompleted(UnitTypes.TERRAN_COMMANDCENTER) > 2)
             {
                 if (MacroData.DesiredUnitCounts[UnitTypes.TERRAN_RAVEN] < 1)
                 {
@@ -166,7 +166,7 @@ namespace SharkyExampleBot.Builds
 
             if (MacroData.Minerals > 500)
             {
-                if (MacroData.DesiredProductionCounts[UnitTypes.TERRAN_COMMANDCENTER] <= UnitManager.EquivalentTypeCount(UnitTypes.TERRAN_COMMANDCENTER))
+                if (MacroData.DesiredProductionCounts[UnitTypes.TERRAN_COMMANDCENTER] <= UnitCountService.EquivalentTypeCount(UnitTypes.TERRAN_COMMANDCENTER))
                 {
                     MacroData.DesiredProductionCounts[UnitTypes.TERRAN_COMMANDCENTER]++;
                 }

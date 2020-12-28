@@ -31,15 +31,15 @@ namespace SharkyExampleBot
             defaultSharkyBot.BuildChoices[Race.Terran] = MyBuildChoices.GetTerranBuildChoices(defaultSharkyBot);
 
             // we add custom micro
-            defaultSharkyBot.IndividualMicroControllers[UnitTypes.TERRAN_MARINE] = new MyMarineMicroController(defaultSharkyBot.MapDataService, defaultSharkyBot.UnitDataManager, defaultSharkyBot.UnitManager, defaultSharkyBot.DebugManager, defaultSharkyBot.SharkySimplePathFinder, defaultSharkyBot.BaseManager, defaultSharkyBot.SharkyOptions, MicroPriority.LiveAndAttack, false);
-            defaultSharkyBot.IndividualMicroControllers[UnitTypes.TERRAN_BANSHEE] = new MyBansheeMicroController(defaultSharkyBot.MapDataService, defaultSharkyBot.UnitDataManager, defaultSharkyBot.UnitManager, defaultSharkyBot.DebugManager, defaultSharkyBot.SharkySimplePathFinder, defaultSharkyBot.BaseManager, defaultSharkyBot.SharkyOptions, MicroPriority.LiveAndAttack, false);
+            defaultSharkyBot.MicroData.IndividualMicroControllers[UnitTypes.TERRAN_MARINE] = new MyMarineMicroController(defaultSharkyBot.MapDataService, defaultSharkyBot.UnitDataManager, defaultSharkyBot.ActiveUnitData, defaultSharkyBot.DebugManager, defaultSharkyBot.SharkySimplePathFinder, defaultSharkyBot.BaseManager, defaultSharkyBot.SharkyOptions, defaultSharkyBot.DamageService, MicroPriority.LiveAndAttack, false);
+            defaultSharkyBot.MicroData.IndividualMicroControllers[UnitTypes.TERRAN_BANSHEE] = new MyBansheeMicroController(defaultSharkyBot.MapDataService, defaultSharkyBot.UnitDataManager, defaultSharkyBot.ActiveUnitData, defaultSharkyBot.DebugManager, defaultSharkyBot.SharkySimplePathFinder, defaultSharkyBot.BaseManager, defaultSharkyBot.SharkyOptions, defaultSharkyBot.DamageService, MicroPriority.LiveAndAttack, false);
 
             // we add custom tasks
-            var bansheeHarassController = new MyBansheeMicroController(defaultSharkyBot.MapDataService, defaultSharkyBot.UnitDataManager, defaultSharkyBot.UnitManager, defaultSharkyBot.DebugManager, defaultSharkyBot.SharkyPathFinder, defaultSharkyBot.BaseManager, defaultSharkyBot.SharkyOptions, MicroPriority.LiveAndAttack, false); // we use SharkyPathFinder for the harass micro, a more resource intensive pathing controller that should be used only for a few units at once
+            var bansheeHarassController = new MyBansheeMicroController(defaultSharkyBot.MapDataService, defaultSharkyBot.UnitDataManager, defaultSharkyBot.ActiveUnitData, defaultSharkyBot.DebugManager, defaultSharkyBot.SharkyPathFinder, defaultSharkyBot.BaseManager, defaultSharkyBot.SharkyOptions, defaultSharkyBot.DamageService, MicroPriority.LiveAndAttack, false); // we use SharkyPathFinder for the harass micro, a more resource intensive pathing controller that should be used only for a few units at once
             defaultSharkyBot.MicroManager.MicroTasks["MyBansheeHarassTask"] = new MyBansheeHarassTask(defaultSharkyBot.BaseManager, defaultSharkyBot.TargetingManager, defaultSharkyBot.MapDataService, bansheeHarassController);
 
             // we add our custom enemy strategies
-            var zealotRush = new EnemyStrategies.ZealotRush(defaultSharkyBot.EnemyStrategyHistory, defaultSharkyBot.ChatManager, defaultSharkyBot.UnitManager, defaultSharkyBot.SharkyOptions);
+            var zealotRush = new EnemyStrategies.ZealotRush(defaultSharkyBot.EnemyStrategyHistory, defaultSharkyBot.ChatManager, defaultSharkyBot.UnitCountService, defaultSharkyBot.SharkyOptions);
             defaultSharkyBot.EnemyStrategies[zealotRush.Name()] = zealotRush;
 
             // we create a bot with the modified default bot we made

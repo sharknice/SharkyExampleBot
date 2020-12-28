@@ -6,17 +6,17 @@ namespace SharkyExampleBot.EnemyStrategies
 {
     public class ZealotRush : EnemyStrategy
     {
-        public ZealotRush(EnemyStrategyHistory enemyStrategyHistory, IChatManager chatManager, IUnitManager unitManager, SharkyOptions sharkyOptions)
+        public ZealotRush(EnemyStrategyHistory enemyStrategyHistory, IChatManager chatManager, UnitCountService unitCountService, SharkyOptions sharkyOptions)
         {
             EnemyStrategyHistory = enemyStrategyHistory;
             ChatManager = chatManager;
-            UnitManager = unitManager;
+            UnitCountService = unitCountService;
             SharkyOptions = sharkyOptions;
         }
 
         protected override bool Detect(int frame)
         {
-            if (UnitManager.EnemyCount(UnitTypes.PROTOSS_ZEALOT) >= 5 && frame < SharkyOptions.FramesPerSecond * 4 * 60)
+            if (UnitCountService.EnemyCount(UnitTypes.PROTOSS_ZEALOT) >= 5 && frame < SharkyOptions.FramesPerSecond * 4 * 60)
             {
                 return true;
             }
