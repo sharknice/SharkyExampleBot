@@ -2,7 +2,7 @@
 using Sharky;
 using Sharky.Builds;
 using Sharky.Builds.BuildChoosing;
-using Sharky.Managers;
+using Sharky.Chat;
 using System.Collections.Generic;
 
 namespace SharkyExampleBot.Builds
@@ -11,7 +11,7 @@ namespace SharkyExampleBot.Builds
     {
         bool OpeningAttackChatSent;
 
-        public ZealotRush(BuildOptions buildOptions, MacroData macroData, ActiveUnitData activeUnitData, AttackData attackData, IChatManager chatManager, ChronoData chronoData, ICounterTransitioner counterTransitioner, UnitCountService unitCountService) : base(buildOptions, macroData, activeUnitData, attackData, chatManager, chronoData, counterTransitioner, unitCountService)
+        public ZealotRush(BuildOptions buildOptions, MacroData macroData, ActiveUnitData activeUnitData, AttackData attackData, ChatService chatService, ChronoData chronoData, ICounterTransitioner counterTransitioner, UnitCountService unitCountService) : base(buildOptions, macroData, activeUnitData, attackData, chatService, chronoData, counterTransitioner, unitCountService)
         {
             OpeningAttackChatSent = false;
         }
@@ -49,7 +49,7 @@ namespace SharkyExampleBot.Builds
 
             if (!OpeningAttackChatSent && MacroData.FoodArmy > 10)
             {
-                ChatManager.SendChatType("ZealotRush-FirstAttack");
+                ChatService.SendChatType("ZealotRush-FirstAttack");
                 OpeningAttackChatSent = true;
             }
         }

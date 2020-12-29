@@ -1,5 +1,4 @@
 ﻿using Sharky;
-using Sharky.Managers;
 using Sharky.MicroTasks;
 using Sharky.MicroTasks.Harass;
 using Sharky.Pathing;
@@ -9,25 +8,23 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharkyExampleBot.Tasks
 {
     public class MyBansheeHarassTask : MicroTask
     {
-        IBaseManager BaseManager;
-        ITargetingManager TargetingManager;
+        BaseData BaseData;
+        TargetingData TargetingData;
         MapDataService MapDataService;
         MyBansheeMicroController BansheeMicroController;
 
         public int DesiredCount { get; set; }
         List<HarassInfo> HarassInfos { get; set; }
 
-        public MyBansheeHarassTask(IBaseManager baseManager, ITargetingManager targetingManager, MapDataService mapDataService, MyBansheeMicroController bansheeController, int desiredCount = 1, bool enabled = true, float priority = -1f)
+        public MyBansheeHarassTask(BaseData baseManager, TargetingData targetingData, MapDataService mapDataService, MyBansheeMicroController bansheeController, int desiredCount = 1, bool enabled = true, float priority = -1f)
         {
-            BaseManager = baseManager;
-            TargetingManager = targetingManager;
+            BaseData = baseManager;
+            TargetingData = targetingData;
             MapDataService = mapDataService;
             BansheeMicroController = bansheeController;
             DesiredCount = desiredCount;
@@ -69,7 +66,7 @@ namespace SharkyExampleBot.Tasks
                     {
                         if (Vector2.DistanceSquared(new Vector2(commander.UnitCalculation.Unit.Pos.X, commander.UnitCalculation.Unit.Pos.Y), new Vector2(harassInfo.BaseLocation.MineralLineLocation.X, harassInfo.BaseLocation.MineralLineLocation.Y)) < 100)
                         {
-                            var action = BansheeMicroController.HarassWorkers(commander, harassInfo.BaseLocation.MineralLineLocation, TargetingManager.ForwardDefensePoint, frame);
+                            var action = BansheeMicroController.HarassWorkers(commander, harassInfo.BaseLocation.MineralLineLocation, TargetingData.ForwardDefensePoint, frame);
                             if (action != null)
                             {
                                 commands.Add(action);
@@ -93,7 +90,7 @@ namespace SharkyExampleBot.Tasks
                         }
                         else if (!commander.UnitCalculation.NearbyEnemies.Any(e => e.DamageAir) && commander.UnitCalculation.NearbyEnemies.Count(e => e.UnitClassifications.Contains(UnitClassification.Worker)) > 2)  // if near woerkers and nothing can attack it just kill workers
                         {
-                            var action = BansheeMicroController.HarassWorkers(commander, harassInfo.BaseLocation.MineralLineLocation, TargetingManager.ForwardDefensePoint, frame);
+                            var action = BansheeMicroController.HarassWorkers(commander, harassInfo.BaseLocation.MineralLineLocation, TargetingData.ForwardDefensePoint, frame);
                             if (action != null)
                             {
                                 commands.Add(action);
@@ -101,7 +98,7 @@ namespace SharkyExampleBot.Tasks
                         }
                         else
                         {
-                            var action = BansheeMicroController.NavigateToPoint(commander, harassInfo.BaseLocation.MineralLineLocation, TargetingManager.ForwardDefensePoint, null, frame);
+                            var action = BansheeMicroController.NavigateToPoint(commander, harassInfo.BaseLocation.MineralLineLocation, TargetingData.ForwardDefensePoint, null, frame);
                             if (action != null)
                             {
                                 commands.Add(action);
@@ -110,7 +107,7 @@ namespace SharkyExampleBot.Tasks
                     }
                     else
                     {
-                        var action = BansheeMicroController.NavigateToPoint(commander, TargetingManager.ForwardDefensePoint, TargetingManager.MainDefensePoint, null, frame);
+                        var action = BansheeMicroController.NavigateToPoint(commander, TargetingData.ForwardDefensePoint, TargetingData.MainDefensePoint, null, frame);
                         if (action != null)
                         {
                             commands.Add(action);
@@ -127,14 +124,14 @@ namespace SharkyExampleBot.Tasks
             if (HarassInfos == null)
             {
                 HarassInfos = new List<HarassInfo>();
-                foreach (var baseLocation in BaseManager.BaseLocations.Where(b => b.ResourceCenter == null || b.ResourceCenter.Alliance != SC2APIProtocol.Alliance.Self).Reverse())
+                foreach (var baseLocation in BaseData.BaseLocations.Where(b => b.ResourceCenter == null || b.ResourceCenter.Alliance != SC2APIProtocol.Alliance.Self).Reverse())
                 {
                     HarassInfos.Add(new HarassInfo { BaseLocation = baseLocation, Harassers = new List<UnitCommander>(), LastClearedFrame = -1, LastDefendedFrame = -1, LastPathFailedFrame = -1 });
                 }
             }
             else
             {
-                foreach (var baseLocation in BaseManager.SelfBases)
+                foreach (var baseLocation in BaseData.SelfBases)
                 {
                     HarassInfos.RemoveAll(h => h.BaseLocation.Location.X == baseLocation.Location.X && h.BaseLocation.Location.Y == baseLocation.Location.Y);
                 }

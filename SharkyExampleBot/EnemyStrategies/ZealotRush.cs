@@ -1,15 +1,15 @@
 ﻿using Sharky;
+using Sharky.Chat;
 using Sharky.EnemyStrategies;
-using Sharky.Managers;
 
 namespace SharkyExampleBot.EnemyStrategies
 {
     public class ZealotRush : EnemyStrategy
     {
-        public ZealotRush(EnemyStrategyHistory enemyStrategyHistory, IChatManager chatManager, UnitCountService unitCountService, SharkyOptions sharkyOptions)
+        public ZealotRush(EnemyStrategyHistory enemyStrategyHistory, ChatService chatService, UnitCountService unitCountService, SharkyOptions sharkyOptions)
         {
             EnemyStrategyHistory = enemyStrategyHistory;
-            ChatManager = chatManager;
+            ChatService = chatService;
             UnitCountService = unitCountService;
             SharkyOptions = sharkyOptions;
         }

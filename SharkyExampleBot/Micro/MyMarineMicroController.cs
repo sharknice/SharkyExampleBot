@@ -1,6 +1,5 @@
 ﻿using SC2APIProtocol;
 using Sharky;
-using Sharky.Managers;
 using Sharky.MicroControllers;
 using Sharky.Pathing;
 using System.Linq;
@@ -9,8 +8,8 @@ namespace SharkyExampleBot.Micro
 {
     public class MyMarineMicroController : IndividualMicroController
     {
-        public MyMarineMicroController(MapDataService mapDataService, UnitDataManager unitDataManager, ActiveUnitData activeUnitData, DebugManager debugManager, IPathFinder sharkyPathFinder, IBaseManager baseManager, SharkyOptions sharkyOptions, DamageService damageService, MicroPriority microPriority, bool groupUpEnabled)
-            : base(mapDataService, unitDataManager, activeUnitData, debugManager, sharkyPathFinder, baseManager, sharkyOptions, damageService, microPriority, groupUpEnabled)
+        public MyMarineMicroController(MapDataService mapDataService, SharkyUnitData sharkyUnitData, ActiveUnitData activeUnitData, DebugService debugService, IPathFinder sharkyPathFinder, BaseData baseData, SharkyOptions sharkyOptions, DamageService damageService, UnitDataService unitDataService, MicroPriority microPriority, bool groupUpEnabled)
+            : base(mapDataService, sharkyUnitData, activeUnitData, debugService, sharkyPathFinder, baseData, sharkyOptions, damageService, unitDataService, microPriority, groupUpEnabled)
         {
 
         }
@@ -19,7 +18,7 @@ namespace SharkyExampleBot.Micro
         {
             action = null;
 
-            if (UnitDataManager.ResearchedUpgrades.Contains((uint)Upgrades.STIMPACK))
+            if (SharkyUnitData.ResearchedUpgrades.Contains((uint)Upgrades.STIMPACK))
             {
                 if (commander.UnitCalculation.Unit.BuffIds.Contains((uint)Buffs.STIMPACK)) // don't double stim
                 {

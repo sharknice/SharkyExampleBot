@@ -2,7 +2,7 @@
 using Sharky;
 using Sharky.Builds;
 using Sharky.Builds.Terran;
-using Sharky.Managers;
+using Sharky.Chat;
 using Sharky.MicroTasks;
 
 namespace SharkyExampleBot.Builds
@@ -13,11 +13,11 @@ namespace SharkyExampleBot.Builds
         ProxyScoutTask ProxyScoutTask;
         bool Scouted;
 
-        MicroManager MicroManager;
+        MicroTaskData MicroTaskData;
 
-        public BansheesAndMarines(BuildOptions buildOptions, MacroData macroData, ActiveUnitData activeUnitData, AttackData attackData, IChatManager chatManager, MicroManager microManager, UnitCountService unitCountService) : base(buildOptions, macroData, activeUnitData, attackData, chatManager, unitCountService)
+        public BansheesAndMarines(BuildOptions buildOptions, MacroData macroData, ActiveUnitData activeUnitData, AttackData attackData, ChatService chatService, MicroTaskData microTaskData, UnitCountService unitCountService) : base(buildOptions, macroData, activeUnitData, attackData, chatService, unitCountService)
         {
-            MicroManager = microManager;
+            MicroTaskData = microTaskData;
         }
 
         public override void StartBuild(int frame)
@@ -26,13 +26,13 @@ namespace SharkyExampleBot.Builds
 
             BuildOptions.StrictGasCount = true;
 
-            if (MicroManager.MicroTasks.ContainsKey("WorkerScoutTask"))
+            if (MicroTaskData.MicroTasks.ContainsKey("WorkerScoutTask"))
             {
-                WorkerScoutTask = (WorkerScoutTask)MicroManager.MicroTasks["WorkerScoutTask"];
+                WorkerScoutTask = (WorkerScoutTask)MicroTaskData.MicroTasks["WorkerScoutTask"];
             }
-            if (MicroManager.MicroTasks.ContainsKey("ProxyScoutTask"))
+            if (MicroTaskData.MicroTasks.ContainsKey("ProxyScoutTask"))
             {
-                ProxyScoutTask = (ProxyScoutTask)MicroManager.MicroTasks["ProxyScoutTask"];
+                ProxyScoutTask = (ProxyScoutTask)MicroTaskData.MicroTasks["ProxyScoutTask"];
             }
         }
 
