@@ -45,7 +45,7 @@ namespace SharkyExampleBot
             // we create a bot with the modified default bot we made
             var sharkyExampleBot = defaultSharkyBot.CreateBot(defaultSharkyBot.Managers, defaultSharkyBot.DebugService);
 
-            var myRace = Race.Random; // if you change your bot's race make sure you also update ladderbots.json if you're using it on the ladder
+            var myRace = Race.Terran; // if you change your bot's race make sure you also update ladderbots.json if you're using it on the ladder
             if (args.Length == 0)
             {
                 // if we just run the program without arguments we'll play against a random built in AI

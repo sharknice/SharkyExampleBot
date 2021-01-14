@@ -96,17 +96,22 @@ namespace SharkyExampleBot
 
         public static BuildChoices GetTerranBuildChoices(DefaultSharkyBot defaultSharkyBot)
         {
+            var scveMicroController = new IndividualMicroController(defaultSharkyBot.MapDataService, defaultSharkyBot.SharkyUnitData, defaultSharkyBot.ActiveUnitData, defaultSharkyBot.DebugService, defaultSharkyBot.SharkyPathFinder, defaultSharkyBot.BaseData, defaultSharkyBot.SharkyOptions, defaultSharkyBot.DamageService, defaultSharkyBot.UnitDataService, MicroPriority.JustLive, false);
+
             var massMarines = new MassMarines(defaultSharkyBot.BuildOptions, defaultSharkyBot.MacroData, defaultSharkyBot.ActiveUnitData, defaultSharkyBot.AttackData, defaultSharkyBot.ChatService, defaultSharkyBot.UnitCountService);
             var bansheesAndMarines = new BansheesAndMarines(defaultSharkyBot.BuildOptions, defaultSharkyBot.MacroData, defaultSharkyBot.ActiveUnitData, defaultSharkyBot.AttackData, defaultSharkyBot.ChatService, defaultSharkyBot.MicroTaskData, defaultSharkyBot.UnitCountService);
+            var reaperCheese = new ReaperCheese(defaultSharkyBot.BuildOptions, defaultSharkyBot.MacroData, defaultSharkyBot.ActiveUnitData, defaultSharkyBot.AttackData, defaultSharkyBot.ChatService, defaultSharkyBot.MicroTaskData, defaultSharkyBot.UnitCountService, defaultSharkyBot.SharkyUnitData, defaultSharkyBot.ProxyLocationService, defaultSharkyBot.DebugService, scveMicroController);
 
             var builds = new Dictionary<string, ISharkyBuild>
             {
+                [reaperCheese.Name()] = reaperCheese,
                 [massMarines.Name()] = massMarines,
                 [bansheesAndMarines.Name()] = bansheesAndMarines
             };
 
             var defaultSequences = new List<List<string>>
             {
+                new List<string> { reaperCheese.Name(), bansheesAndMarines.Name() },
                 new List<string> { massMarines.Name(), bansheesAndMarines.Name() },
                 new List<string> { bansheesAndMarines.Name() }
             };
