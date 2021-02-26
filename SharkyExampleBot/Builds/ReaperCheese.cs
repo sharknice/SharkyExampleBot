@@ -62,7 +62,7 @@ namespace SharkyExampleBot.Builds
 
         void SetAttack()
         {
-            if (UnitCountService.Completed(UnitTypes.TERRAN_REAPER) > 5)
+            if (UnitCountService.Completed(UnitTypes.TERRAN_REAPER) > 1)
             {
                 AttackData.Attacking = true;
                 if (!OpeningAttackChatSent)

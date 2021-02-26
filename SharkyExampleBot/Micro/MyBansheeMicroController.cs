@@ -15,7 +15,7 @@ namespace SharkyExampleBot.Micro
 
         }
 
-        protected override bool PreOffenseOrder(UnitCommander commander, Point2D target, Point2D defensivePoint, Point2D groupCenter, UnitCalculation bestTarget, int frame, out SC2APIProtocol.Action action)
+        protected override bool PreOffenseOrder(UnitCommander commander, Point2D target, Point2D defensivePoint, Point2D groupCenter, UnitCalculation bestTarget, int frame, out List<SC2APIProtocol.Action> action)
         {
             action = null;
 
@@ -36,9 +36,9 @@ namespace SharkyExampleBot.Micro
             return false;
         }
 
-        public SC2APIProtocol.Action NavigateToPoint(UnitCommander commander, Point2D target, Point2D defensivePoint, Point2D groupCenter, int frame)
+        public List<SC2APIProtocol.Action> NavigateToPoint(UnitCommander commander, Point2D target, Point2D defensivePoint, Point2D groupCenter, int frame)
         {
-            SC2APIProtocol.Action action = null;
+            List<SC2APIProtocol.Action> action = null;
 
             if (PreOffenseOrder(commander, target, defensivePoint, null, null, frame, out action)) { return action; }
 
@@ -71,9 +71,9 @@ namespace SharkyExampleBot.Micro
             return action;
         }
 
-        public SC2APIProtocol.Action HarassWorkers(UnitCommander commander, Point2D target, Point2D defensivePoint, int frame)
+        public List<SC2APIProtocol.Action> HarassWorkers(UnitCommander commander, Point2D target, Point2D defensivePoint, int frame)
         {
-            SC2APIProtocol.Action action = null;
+            List<SC2APIProtocol.Action> action = null;
 
             var bestTarget = GetBestHarassTarget(commander, target);
 
